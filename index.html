@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .statement{display:inline-block;background: #FFFFFF;padding: 5px 10px; border-radius: 4px}
+        .input{display: block;max-width: 400px;width: 100%;padding: 8px;border-radius: 4px;border: 1px solid #D3D3D3}
+        label{font-size: 20px}
+        body{background: #f0ede4;font-family: Arial, sans-serif;color:#333333}
+        #main_container{display: inline-block;border: solid #D3D3D3 1px;width: 550px;border-radius: 8px;background: #E6F0FA;padding: 20px}
+        h2{border:solid #468C7A 1px;border-radius: 5px;padding: 10px; color: #468C7A;background: #FFFFFF}
+        #second_main_container{padding:20px;display: inline-block;vertical-align: top;border: #D3D3D3;height: 1065px;background: #E0F2E9;margin-left:20px;border-radius: 15px}
+        #second_main_container h1{color:#468C7A;font-size: 24px}
+        #response_ai_paragraph{width: 600px;height: 800px;background: white;border-radius: 5px;padding: 15px}
+        label{font-size: 16px;margin-left: 5px}
+        #send_prompt_id{padding: 10px 10px;border-radius: 5px;width: 95px;background: #6BA583;color:white;border:none}
+    </style>
+</head>
+<body>
+
+<div id="main_container">
+    <h2>
+        Please state your problem and we will try to assist you. However it is highly recommended that you get yourself from a professional therapist.
+    </h2>
+    <div>
+        <p  class="statement">
+            Please state your name
+        </p>
+        <input type="text" id="name_id" class="input">
+    </div>
+
+    <div>
+        <p class="statement">
+            Please state your age
+        </p>
+        <select id="select_age_id" class="input">
+
+        </select>
+    </div>
+
+    <div id="occupation_div">
+        <p class="statement">
+            Please state your occupation
+        </p>
+        <select id="select_occupation_id" class="input">
+
+        </select>
+    </div>
+
+    <div id="addictions_div">
+        <p class="statement">
+            Please state any addictions
+        </p>
+        <select id="addictions_select_id" class="input">
+
+        </select>
+    </div>
+
+    <div>
+        <p class="statement">
+            Are you taking any medications or undergoing any mental therapy sessions?
+        </p>
+        <select id="medications_id" class="input">
+
+        </select>
+    </div>
+
+    <div>
+        <p class="statement">
+            Please state any traumatic event in your life recently
+        </p>
+        <select id="traumatic_event_select" class="input">
+
+        </select>
+    </div>
+
+    <div>
+        <p class="statement">
+            In an upsetting situation, how do you deal with your emotions?
+        </p>
+        <br>
+        <input type="checkbox" value="confide to parents" class="handling_stress"><label>confide to parents</label><br>
+        <input type="checkbox" value="confide to siblings" class="handling_stress"><label>confide to siblings</label><br>
+        <input type="checkbox" value="confide to friends"class="handling_stress"><label>confide to friends</label><br>
+        <input type="checkbox" value="confide to wife"class="handling_stress"><label>confide to wife</label><br>
+        <input type="checkbox" value="i tend to bottle my emotions and stress" class="handling_stress"><label>i tend to bottle my emotions and stress</label><br>
+        <input type="checkbox" value="i tend to handle problems on my own" class="handling_stress"><label>i tend to handle problems on my own</label><br>
+        <input type="checkbox" value="i tend to shout and scream on people" class="handling_stress"><label>i tend to shout and scream on people</label><br>
+        <input type="checkbox" value="i tend to throw or break things to relieve my anger" class="handling_stress"><label>i tend to throw or break things to relieve my anger</label><br>
+        <input type="checkbox" value="i go for a walk or exercise" class="handling_stress"><label>i go for a walk or exercise</label><br>
+        <input type="checkbox" value="i go to sleep" class="handling_stress"><label>i go to sleep</label><br>
+        <input type="checkbox" value="i tend to hide or procrastinate so as to not face the issue" class="handling_stress"><label>i tend to hide or procrastinate so as to not face the issue</label><br>
+        <input type="checkbox" value="i binge watch televison or escape in virtual world of computer" class="handling_stress"><label>i binge watch televison or escape in virtual world of computer</label><br>
+        <input type="checkbox" value="i plan for revenge or think of some way to get back at the person who did wrong to me" class="handling_stress"><label>i plan for revenge or think of some way to get back at the person who did wrong to me</label><br>
+        <input type="checkbox" value="life is unfair to me, i am ugly and i cant deal with it, everybody hates me" class="handling_stress"><label>life is unfair to me, i am ugly and i cant deal with it, everybody hates me</label>
+    </div>
+
+    <div>
+        <p class="statement">
+            Are there thoughts of suicide or have you attempted suicide?
+        </p>
+        <br>
+        <input type="checkbox" value="no to suicide thoughts" class="suicide_class"><label>no to suicide thoughts</label><br>
+        <input type="checkbox" value="suicide thoughts do occasionally come in my mind" class="suicide_class"><label>suicide thoughts do occasionally come in my mind</label><br>
+        <input type="checkbox" value="seriously considering suicide" class="suicide_class"><label>seriously considering suicide</label><br>
+        <input type="checkbox" value="i have attempted suicide in past" class="suicide_class"><label>i have attempted suicide in past</label><br>
+        <input type="checkbox" value="a near relative has also attempted or died of suicide" class="suicide_class"><label>a near relative has also attempted or died of suicide</label><br>
+
+    </div>
+    <br>
+    <input type="button" value="send_prompt" id="send_prompt_id">
+</div>
+<div id="second_main_container">
+    <h1>Response from artificial intelligence</h1>
+    <p style="width: 600px;height: 800px" id="response_ai_paragraph">
+
+    </p>
+</div>
+
+
+
+<script>
+    let access_main_div_container=document.getElementById("main_container");
+    let access_occupation_div=document.getElementById("occupation_div");
+    let access_addictions_div=document.getElementById("addictions_div");
+    let access_submit_prompt_button=document.getElementById("send_prompt_id");
+    let access_response_from_arificial_intelligence_html=document.getElementById("response_ai_paragraph");
+
+    let access_select_age_dropdown=document.getElementById("select_age_id");
+    for (let i=1;i<=111;i = i+1){
+        let create_option_age=document.createElement("option");
+        if (i<110){
+            create_option_age.innerHTML=i.toString();
+            create_option_age.value=i.toString();
+            access_select_age_dropdown.append(create_option_age);
+        }
+        else if (i>110){
+            create_option_age.innerHTML="age greater than 110";
+            create_option_age.value="age greater than 110"
+            access_select_age_dropdown.append(create_option_age);
+        }
+    }
+
+    let access_select_occupation_dropdown=document.getElementById("select_occupation_id");
+    access_select_occupation_dropdown.style.border="solid black";
+    let list_of_occupations=["student_school","student_college","student_university","free_lancer","business_man","academia","private_job","government_sector_job","unemployed","college_dropout","university_dropout","school_dropout","nothing_applies_to_me"]
+    for (let i=0;i<list_of_occupations.length;i = i+1){
+        let create_option_occupation=document.createElement("option");
+        create_option_occupation.innerHTML=list_of_occupations[i];
+        create_option_occupation.value=list_of_occupations[i];
+
+        access_select_occupation_dropdown.append(create_option_occupation);
+    }
+
+    access_select_occupation_dropdown.addEventListener("change",function (){
+        let selected_option_value=access_select_occupation_dropdown.value;
+
+        if(selected_option_value==="nothing_applies_to_me"){
+            let create_new_occupation_input=document.createElement("input");
+            create_new_occupation_input.style.border = "solid red";
+            create_new_occupation_input.type="text";
+            create_new_occupation_input.style.width="400px";
+            create_new_occupation_input.id="nothing_occupation";
+
+            let create_p_element_separate_occupation=document.createElement("p");
+            create_p_element_separate_occupation.innerHTML="if nothing in dropdown, please write down your occupation";
+
+            access_occupation_div.append(create_p_element_separate_occupation);
+            access_occupation_div.append(create_new_occupation_input);
+        }
+    });
+
+    let list_of_addictions=["Smoking","Heroin","Alcohol","Cannabis","Cocaine","Ice","food_addictions","no_addictions","nothing_applies_here"];
+    let access_select_addictions=document.getElementById("addictions_select_id");
+    for (let i=0;i<list_of_addictions.length;i = i+1){
+        let create_options_addictions=document.createElement("option");
+        create_options_addictions.innerHTML=list_of_addictions[i];
+        create_options_addictions.value=list_of_addictions[i];
+        access_select_addictions.append(create_options_addictions);
+    }
+
+    access_select_addictions.addEventListener("change",function (){
+        let selected_option_by_user=access_select_addictions.value;
+        if (selected_option_by_user==="nothing_applies_here"){
+            let create_p_addictions=document.createElement("p");
+            create_p_addictions.innerHTML="please write your addictions if your option not in dropdown";
+
+            let create_input_addictions=document.createElement("input");
+            create_input_addictions.id="nothing_addiction_id"
+            create_input_addictions.type="text";
+            create_input_addictions.style.width="400px";
+            access_addictions_div.append(create_p_addictions);
+            access_addictions_div.append(create_input_addictions);
+        }
+    });
+
+    let access_select_medications=document.getElementById("medications_id");
+    let list_of_medication_therapy=["yes to both psychiatrist and medicines","yes to pschologist and no to medicines","have not visited any mental health facility","did consider in past to take mental health support"]
+    for(let i =0;i<list_of_medication_therapy.length;i=i+1){
+        let create_option_element=document.createElement("option");
+        create_option_element.innerHTML=list_of_medication_therapy[i];
+        create_option_element.value=list_of_medication_therapy[i];
+        access_select_medications.append(create_option_element);
+    }
+
+    let access_select_traumatic_event=document.getElementById("traumatic_event_select");
+    let list_of_traumas=["body_shaming","self_criticism or excessive criticism from others","death_of_loved_one","breakup of relationship","financial_issues","domestic_abuse","bullying or harassment issues","sexual_abuse","injury or debilitating illness running in family or to yourself"];
+    for(let i=0;i<list_of_traumas.length;i=i+1){
+        let create_option_element=document.createElement("option");
+        create_option_element.innerHTML=list_of_traumas[i];
+        create_option_element.value=list_of_traumas[i];
+        access_select_traumatic_event.append(create_option_element);
+    }
+
+    access_submit_prompt_button.addEventListener("click",async function(){
+        let access_name_input=document.getElementById("name_id");
+        let name_submitted_by_user=access_name_input.value;
+
+        let access_age_input=document.getElementById("select_age_id");
+        let age_submitted_by_user=access_age_input.value;
+
+        let access_occupation_input=document.getElementById("select_occupation_id");
+        let occupation_in_dropdown=access_occupation_input.value;
+
+        let final_occupation_submitted="";
+        if(occupation_in_dropdown!=="nothing_applies_to_me"){
+            final_occupation_submitted=occupation_in_dropdown;
+        }
+        else{
+            let access_occupation_in_case_of_nothing_text_box=document.getElementById("nothing_occupation");
+            final_occupation_submitted=access_occupation_in_case_of_nothing_text_box.value;
+        }
+
+        let access_addictions_input=document.getElementById("addictions_select_id");
+        let addiction_in_dropdown=access_addictions_input.value;
+
+        let final_addiction_submitted="";
+        if(addiction_in_dropdown!=="nothing_applies_here"){
+            final_addiction_submitted=addiction_in_dropdown;
+        }
+        else{
+            let access_addiction_in_case_of_nothing_text_box=document.getElementById("nothing_addiction_id");
+            final_addiction_submitted=access_addiction_in_case_of_nothing_text_box.value;
+        }
+
+        let access_medical_help_input=document.getElementById("medications_id");
+        let medical_help_selected_by_user=access_medical_help_input.value;
+
+        let access_trauma_input=document.getElementById("traumatic_event_select");
+        let trauma_selected_by_user=access_trauma_input.value;
+
+        let list_of_ways_of_handling_stress=document.getElementsByClassName("handling_stress");
+        let all_ways_of_handling_stress="";
+        for(let i=0;i<list_of_ways_of_handling_stress.length;i=i+1){
+            let check_box_checked_handling_stress=list_of_ways_of_handling_stress[i].checked;
+            if(check_box_checked_handling_stress===true){
+                if(all_ways_of_handling_stress===""){
+                    all_ways_of_handling_stress=all_ways_of_handling_stress+list_of_ways_of_handling_stress[i].value;
+                }
+                else{
+                    all_ways_of_handling_stress=all_ways_of_handling_stress+","+list_of_ways_of_handling_stress[i].value;
+                }
+            }
+        }
+
+        let list_of_suicidal_tendencies=document.getElementsByClassName("suicide_class");
+        let all_suicide_tendencies_in_patient="";
+        for(let i=0;i<list_of_suicidal_tendencies.length;i=i+1){
+            let check_box_checked_suicidal_history=list_of_suicidal_tendencies[i].checked;
+            if(check_box_checked_suicidal_history===true){
+                if(all_suicide_tendencies_in_patient===""){
+                    all_suicide_tendencies_in_patient=all_suicide_tendencies_in_patient+list_of_suicidal_tendencies[i].value;
+                }
+                else{
+                    all_suicide_tendencies_in_patient=all_suicide_tendencies_in_patient+","+ list_of_suicidal_tendencies[i].value;
+                }
+            }
+        }
+        let combined_prompt_by_patient="please help what can i do as i am facing a lot of mental stress"+"my name is:" + name_submitted_by_user+" "+"my age is:"+age_submitted_by_user+" "+"i work as:"+final_occupation_submitted+" "+"i currently suffer with:"+final_addiction_submitted+" "+"i have sought medical treatment in form of:"+ medical_help_selected_by_user+" "+"recent trauma that i suffered:" +trauma_selected_by_user+" "+"i handle negative events in life by:"+" "+ all_ways_of_handling_stress+" "+"my suicidal tendencies are:"+all_suicide_tendencies_in_patient;
+        let key_for_local_storage=combined_prompt_by_patient;
+        let api_url="https://api.groq.com/openai/v1/chat/completions";
+        let api_key="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";
+
+        let value_from_local_storage=localStorage.getItem(key_for_local_storage);
+        let value_converted_to_dict=JSON.parse(value_from_local_storage);
+
+        if(value_converted_to_dict!==null){
+            let message_displayed_by_artificial_intelligence=value_converted_to_dict["choices"][0]["message"]["content"];
+            access_response_from_arificial_intelligence_html.innerHTML=message_displayed_by_artificial_intelligence.replaceAll("\n","<br>")
+        }
+        else{
+            let additional_data_along_with_prompt={
+                "model":"llama-3.3-70b-versatile",
+                "messages":[{"role":"user","content":combined_prompt_by_patient}],
+                "max_tokens":500
+            }
+            let additional_api_data={
+                "method":"POST",
+                "headers":{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer "+ api_key
+                },
+                "body":JSON.stringify(additional_data_along_with_prompt)
+            }
+            let response=await fetch(api_url,additional_api_data);
+            let json_data=await response.json();
+
+            let message_displayed_by_artificial_intelligence=json_data["choices"][0]["message"]["content"];
+            console.log(message_displayed_by_artificial_intelligence);
+            access_response_from_arificial_intelligence_html.innerHTML=message_displayed_by_artificial_intelligence.replaceAll("\n","<br>");
+            let json_data_converted_to_string=JSON.stringify(json_data);
+            localStorage.setItem(key_for_local_storage,json_data_converted_to_string);
+        }
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
